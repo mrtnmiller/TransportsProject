@@ -11,7 +11,7 @@ USE logistics;
 
 
 CREATE TABLE transports (
-						transport_id INT,
+			transport_id INT,
                         transport_type VARCHAR(50),
                         departure_date DATE,
                         destination_country VARCHAR(50),
@@ -31,7 +31,7 @@ CREATE TABLE transports (
                         );
                         
 CREATE TABLE drivers   (
-						driver_id INT,
+			driver_id INT,
                         first_name VARCHAR(50),
                         last_name VARCHAR(50),
                         phone_number INT,
@@ -40,7 +40,7 @@ CREATE TABLE drivers   (
                         );
                         
 CREATE TABLE vehicles  (
-						vehicle_id INT AUTO_INCREMENT,
+			vehicle_id INT AUTO_INCREMENT,
                         plate_number VARCHAR(50),
                         vehicle_type VARCHAR(50),
                         maker VARCHAR(50),
@@ -50,7 +50,7 @@ CREATE TABLE vehicles  (
                         );
                         
 CREATE TABLE customers (
-						customer_id INT,
+			customer_id INT,
                         customer_name VARCHAR(50),
                         euro_per_km DECIMAL(3,2),
                         PRIMARY KEY (customer_id)
@@ -63,7 +63,7 @@ CREATE TABLE customers (
                         
                         
 INSERT INTO transports
-			VALUES
+	    VALUES
             (102,"international","2023-02-01","Germany","Wiesbaden",1195,20140601,1,19870914,1050,2,13,231.95),
             (202,"international","2023-02-01","Germany","Wiesbaden",1195,20140601,2,19720319,932,2,13,218.7),
             (302,"international","2023-02-03","France","Lille",1663,20140601,1,19780122,1015,5,17.25,321.5),
@@ -89,7 +89,7 @@ INSERT INTO transports
             ;
             
 INSERT INTO drivers
-			VALUES
+	    VALUES
             (19650510,"Ernő","Urbancsek",203370992,0.05),
             (19780122,"Piotr","Adamcik",302166843,0.065),
             (19870914,"Ferenc","Kollár",307850449,0.065),
@@ -97,7 +97,7 @@ INSERT INTO drivers
             ;
             
 INSERT INTO vehicles
-			VALUES
+	    VALUES
             (1,"DS-AA-483","box van","Volkswagen","Crafter","2017"),
             (2,"DS-AA-484","box van","Volkswagen","Crafter","2017"),
             (3,"EU-HU-007","box van","Ford","Transit","2022"),
@@ -105,7 +105,7 @@ INSERT INTO vehicles
             ;
             
 INSERT INTO customers
-			VALUES
+	    VALUES
             (20140601,"Tecno Solutions",0.33),
             (20150315,"Frazer Logistics",0.4),
             (20160815,"Gamma Warehousing",0.27),
@@ -184,7 +184,7 @@ LIMIT 1;
 
 SELECT
 	AVG(load_weight_kg),
-    destination_country
+	destination_country
 FROM
 	transports
 GROUP BY
@@ -211,13 +211,13 @@ FROM
 
 SELECT
 	c.customer_id,
-    c.customer_name,
-    COUNT(t.customer_id) AS number_of_transports
+	c.customer_name,
+	COUNT(t.customer_id) AS number_of_transports
 FROM
 	customers c
 JOIN
 	transports t
-    ON c.customer_id = t.customer_id
+	ON c.customer_id = t.customer_id
 GROUP BY
 	c.customer_id
 ORDER BY
@@ -229,7 +229,7 @@ LIMIT 1;
 
 SELECT
 	DISTINCT(destination_city),
-    distance_km
+	distance_km
 FROM
 	transports
 WHERE
@@ -242,9 +242,9 @@ ORDER BY
                         
 SELECT
 	UPPER(t.transport_type) AS territory,
-    c.customer_name,
-    CONCAT(d.last_name," ",d.first_name) AS driver_name,
-    t.distance_km
+	c.customer_name,
+	CONCAT(d.last_name," ",d.first_name) AS driver_name,
+	t.distance_km
 FROM
 	transports t
 JOIN 
@@ -263,18 +263,18 @@ ORDER BY
 
 SELECT
 	transport_id,
-    transit_time_hours,
-    CONCAT(d.last_name," ",d.first_name) AS driver_name,
+	transit_time_hours,
+	CONCAT(d.last_name," ",d.first_name) AS driver_name,
 CASE
 	WHEN transit_time_hours > 10 THEN 12
-    WHEN transit_time_hours BETWEEN 5.00 AND 10.00 THEN 7
-    ELSE 0
+	WHEN transit_time_hours BETWEEN 5.00 AND 10.00 THEN 7
+	ELSE 0
 	END AS driver_bonus_euro
 FROM
 	transports t
 JOIN
 	drivers d
-    ON d.driver_id = t.driver_id;
+	ON d.driver_id = t.driver_id;
     
     
 -- Let's add this new column to the transports table.
@@ -284,9 +284,9 @@ ADD driver_bonus_euro INT;
 
 UPDATE transports
 SET driver_bonus_euro = CASE
-						WHEN transit_time_hours > 10 THEN 12
-						WHEN transit_time_hours BETWEEN 5.00 AND 10.00 THEN 7
-						ELSE 0
+			WHEN transit_time_hours > 10 THEN 12
+			WHEN transit_time_hours BETWEEN 5.00 AND 10.00 THEN 7
+			ELSE 0
                         END;
                         
 
@@ -297,33 +297,33 @@ SET driver_bonus_euro = CASE
                         
 SELECT
 	t.transport_id,
-    t.transport_type,
-    t.departure_date,
-    t.destination_country,
-    t.destination_city,
-    t.distance_km,
-    c.customer_name,
-    c.euro_per_km,
-    v.plate_number,
-    d.first_name,
-    d.last_name,
-    d.salary_per_km,
-    driver_bonus_euro,
-    t.load_weight_kg,
-    t.number_of_palets,
-    t.transit_time_hours,
-    fuel_price
+	t.transport_type,
+    	t.departure_date,
+    	t.destination_country,
+    	t.destination_city,
+    	t.distance_km,
+    	c.customer_name,
+    	c.euro_per_km,
+   	v.plate_number,
+    	d.first_name,
+    	d.last_name,
+    	d.salary_per_km,
+    	driver_bonus_euro,
+    	t.load_weight_kg,
+    	t.number_of_palets,
+    	t.transit_time_hours,
+    	fuel_price
 FROM 
 	transports t
 JOIN
 	customers c 
-    ON c.customer_id = t.customer_id
+    	ON c.customer_id = t.customer_id
 JOIN
 	drivers d 
-    ON d.driver_id = t.driver_id
+    	ON d.driver_id = t.driver_id
 JOIN
 	vehicles v 
-    ON v.vehicle_id = t.vehicle_id
+    	ON v.vehicle_id = t.vehicle_id
 ORDER BY
 	transport_id;
     
