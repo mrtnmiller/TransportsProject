@@ -19,3 +19,4 @@ Here is an overview of the database:
 
 The code was written in standard SQL using MySQL syntax, therefore it is recommended to run it in a similar environment otherwise apply the necessary changes.
 
+To see the code, click on the transports.sql file.
