@@ -10,7 +10,7 @@ The project involves:
 - Creating and populating 4 tables using SQL DDL and DML
 - Establishing the connection between the tables making the database relational (RDB)
 - Performing sorting, filtering, calculations and joins
-- Querying the database using SQL DQL to create a CSV file for reporting in Google Sheets
+- Querying the database using SQL DQL to create a CSV file for reporting in Google Sheets which can be viewed here: https://bit.ly/3yAYivT
 
 Here is an overview of the database:
 
